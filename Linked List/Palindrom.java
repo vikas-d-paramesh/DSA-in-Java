@@ -83,23 +83,56 @@ public class Palindrom {
 
     }
 
+    // public static boolean palindrom(){ using array
+    //     int[] arr=new int[Size];
+    //     Node temp=head;
+    //     int i=0;
+    //     while(temp!=null){
+    //         arr[i]=temp.data;
+    //         temp=temp.next;
+    //         i++;
+    //     }
+    //     boolean istrue=true;
+    //     for(int j=0;j<arr.length/2;j++){
+    //         int n=arr.length;
+    //         if(arr[j]!=arr[n-1]){
+    //             istrue=false;
+    //         }
+    //     }
+    //     return istrue;
+    // }
+
     public static boolean palindrom(){
-        int[] arr=new int[Size];
+        if(head==null){
+            return true;
+        }
+
+        Node mid=head; //used Slow/Fast techniqe to find mid
         Node temp=head;
-        int i=0;
-        while(temp!=null){
-            arr[i]=temp.data;
-            temp=temp.next;
-            i++;
+        while(temp!=null && temp.next!=null){
+            mid=mid.next;
+            temp=temp.next.next;
         }
-        boolean istrue=true;
-        for(int j=0;j<arr.length/2;j++){
-            int n=arr.length;
-            if(arr[j]!=arr[n-1]){
-                istrue=false;
+        Node pre=null;
+        Node cur=mid;
+        Node next;
+        while(cur!=null && cur.next!=null){ //reversing second half of the node
+            next=cur.next;
+            cur.next=pre;
+            pre=cur;
+            cur=next;
+        }
+
+        Node right=tail;
+        Node left=head;
+        while(right!=null && left!=null){
+            if(left.data!=right.data){
+                return false;
             }
+            left=left.next;
+            right=right.next;
         }
-        return istrue;
+        return true;
     }
 
     public static void main(String args[]){
@@ -109,7 +142,7 @@ public class Palindrom {
             print();
             addFirst(10);
             print();
-            addFirst(5);;
+            addFirst(12);;
             print();
             System.out.println(Size);
             System.out.println(palindrom());;;
